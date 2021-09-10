@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { useState } from 'react'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Layout from './component/layout'
+import Image from './component/image'
 
 export default function Home() {
   const [title, setTitle] = useState("Index")
@@ -26,6 +26,8 @@ export default function Home() {
             <Link href="/other">
               <a>Go to Other page $gt;#gt;</a>
             </Link>
+            
+            <Image fname="koishi.jpg" size="400" />
           </div>
         </div>
       </div>
