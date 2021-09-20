@@ -4,20 +4,20 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Layout from './component/layout'
 import Image from './component/image'
-import swr from 'swr'
+import useSWR from 'swr'
+
+const fetcher = (url) => fetch(url)
+  .then((res) => res.json());
 
 export default function Home() {
-  const[data] = useSWR('./data.json')
+  //const[data, setData] = useState({message:'', data:[]})
+  //const url = './data.json'
 
-  
-  const url = './data.json'
+  //fetch(url)
+  //  .then(res => res.json())
+  //  .then(res => setData(res))
 
-  fetch(url)
-    .then(res => res.json())
-    .then(res => setData(res))
-
-  const [title, setTitle] = useState("Index")
-  const [message, setMessage] = useState("React Next.js sample page")
+  const { data, error } = useSWR('./data.json', fetcher)
 
   return (
     <div>
@@ -25,19 +25,22 @@ export default function Home() {
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossOrigin="anonymous"></link>
       <Layout header="Next.js" title="Top Pages" />
         <div className="alert alert-primary text-center">
-          <h3 className="mb-4">{data.message}</h3>
-            <table className="title bg-white">
-              <thead className="table-dark">
+          <h3 className="mb-4">{data != undefined ? data.message : 'error...'}</h3>
+            <table className="table table-dark">
+              <thead className="">
                 <tr><th>Name</th><th>Mail</th><th>Age</th></tr>
               </thead>
               <tbody>
-                {data.data.map((value, key) => {
-                  <tr ket={key}>
+                {data != undefined ? data.data.map((value, key) => (
+                  <tr key={key}>
                     <th>{value.name}</th>
                     <th>{value.mail}</th>
                     <th>{value.age}</th>
                   </tr>
-                })}
+                )):
+                <tr>
+                    <th>nodata...</th>
+                  </tr>}
               </tbody>
             </table>
         </div>
