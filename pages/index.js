@@ -4,10 +4,10 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Layout from './component/layout'
 import Image from './component/image'
+import swr from 'swr'
 
 export default function Home() {
- // const url = './public/data.json'
-  const[data, setData] = useState({message:'', data:[]})
+  const[data] = useSWR('./data.json')
 
   
   const url = './data.json'
